@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "Playlist.h"
+#import "constants.h"
 
 @interface Player : NSObject
 {
