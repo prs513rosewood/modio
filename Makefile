@@ -1,3 +1,7 @@
+FRAMEWORKS=-framework Foundation -framework AppKit
+CC=gcc
+EXEC=modio
+
 all:main.m
-	gcc -x objective-c -framework Foundation $^ -o modio
+	$(CC) $(FRAMEWORKS) $^ -o $(EXEC)
 
