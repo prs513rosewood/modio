@@ -13,3 +13,6 @@ Player.o:Player.m Player.h Playlist.o constants.h
 
 Playlist.o:Playlist.m Playlist.h constants.h
 	$(CC) -c $< -o $@
+
+clean:
+	rm -f *.o
