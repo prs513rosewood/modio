@@ -21,8 +21,7 @@ int main (int argc, char * argv[])
 		return -1;
 	}
 
-	enumerator = [args objectEnumerator];
-	[enumerator nextObject];
+	enumerator = [[args subarrayWithRange:NSMakeRange(1, argc - 1)] objectEnumerator];
 
 	while (fileName = [enumerator nextObject]) {
 		if (!(soundSource = [NSData dataWithContentsOfFile:fileName])) {
