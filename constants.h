@@ -2,8 +2,8 @@
 #define CONSTS_H
 
 #define PLAY(x) [x play];\
-		sleep ( [x duration] );\
-		[x stop]
+		sleep ( (int) [x duration] );\
+		[x stop];
 
 enum {
 	RAND = 1 << 0,

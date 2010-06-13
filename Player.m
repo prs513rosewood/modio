@@ -15,45 +15,43 @@
 {
 	NSString * songName = nil;
 	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
-	NSData * source = nil;
-	NSSound * music = nil;
 	int ri = 0, i, done = 0;
 
-	if ( [playlist mode] & RAND) {
-		for (i = 0 ; i < [playSongs count] ; i++) {
-			ri = rand() % [playSongs count];
-			[songs addObject:[playSongs objectAtIndex:ri]];
-			[playSongs removeObjectAtIndex:ri];
-		}
-	}
-
-	else
-		[songs setArray:playSongs];
-
-	if ( [playlist mode] & LOOP) {
-		done = 1;
-	}
-
-	for (songName in songs) {
-		source = [NSData dataWithContentsOfFile:songName];
-
-		if (!source) {
-			printf("file not found: %s\n", [songName UTF8String]);
-			exit (EXIT_FAILURE);
+	do {
+		if ( [playlist mode] & RAND) {
+			for (i = 0 ; i < [playSongs count] ; i++) {
+				ri = rand() % [playSongs count];
+				[songs addObject:[playSongs objectAtIndex:ri]];
+				[playSongs removeObjectAtIndex:ri];
+			}
 		}
 
-		music = [[NSSound alloc] initWithData:source];
+		else
+			[songs setArray:playSongs];
 
-		if (!music) {
-			printf ("could not read file : %s\n", [songName UTF8String]);
-			exit(EXIT_FAILURE);
+		if ( [playlist mode] & LOOP) {
+			done = 1;
 		}
+		for (songName in songs) {
+			NSData * source = [NSData dataWithContentsOfFile:songName];
 
-		PLAY(music);
-		[music release];
-		music = nil;
-		source = nil;
-	}
+			if (!source) {
+				printf("file not found: %s\n", [songName UTF8String]);
+				exit (EXIT_FAILURE);
+			}
+
+			NSSound * music = [[NSSound alloc] initWithData:source];
+
+			if (!music) {
+				printf ("could not read file : %s\n", [songName UTF8String]);
+				exit(EXIT_FAILURE);
+			}
+
+			PLAY(music);
+			NSLog(@"Done plying : %@", songName);
+			[music release];
+		}
+	} while (done);
 }
 
 - (void) dealloc
