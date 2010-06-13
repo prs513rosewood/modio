@@ -2,45 +2,20 @@
 #import <AppKit/AppKit.h>
 
 #include <stdlib.h>
-
-#define PLAY(sound) [sound play];\
-		sleep ( [sound duration] );\
-		[sound stop];
+#import "constants.h"
+#import "Player.h"
+#import "Playlist.h"
 
 int main (int argc, char * argv[])
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSArray * args = [[NSProcessInfo processInfo] arguments];
-	NSData * soundSource = nil;
-	NSString * fileName;
-	NSSound * music = nil;
-	NSEnumerator * enumerator = nil;
+	Playlist * list = [[Playlist alloc] initWithFile:[args objectAtIndex:1]];
+	Player * player = [[Player alloc] initWithPlaylist:list];
 
-	if (argc < 2) {
-		printf ("usage: modio filename ...\n");
-		return -1;
-	}
-
-	enumerator = [[args subarrayWithRange:NSMakeRange(1, argc - 1)] objectEnumerator];
-
-	while (fileName = [enumerator nextObject]) {
-		if (!(soundSource = [NSData dataWithContentsOfFile:fileName])) {
-			printf ("file not found: %s\n", [fileName UTF8String]);
-		}
-
-		else {
-			music = [[NSSound alloc] initWithData:soundSource];
-			if (!music) {
-				printf ("could not read file: %s\n", [fileName UTF8String]);
-			}
-
-			else {
-				PLAY(music);
-				[music release];
-				music = nil;
-			}
-		}
-	}
+	[player play];
+	[list release];
+	[player release];
 	[pool drain];
-	return 0;
+	return EXIT_SUCCESS;
 }

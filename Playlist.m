@@ -8,12 +8,12 @@
 		lines = [[NSMutableArray alloc] init];
 		songs = [[NSMutableArray alloc] init];
 		NSString * contents = [NSString stringWithContentsOfFile:fileName];
-		NSString * aLine = nil, prefix = nil;
+		NSString * aLine = nil, * prefix = nil;
 		NSRange range = NSMakeRange(0, 0);
 		int i;
 
 		for (i = 0 ; i < [contents length] ; i++) {
-			if ([contents caracterAtIndex:i] == '\n') {
+			if ([contents characterAtIndex:i] == '\n') {
 				range.length = i - range.location;
 				[lines addObject:[contents substringWithRange:range]];
 				range.location = i + 1;
@@ -23,7 +23,10 @@
 		for (aLine in lines) {
 			switch ([aLine characterAtIndex:0]) {
 				case ':':
-					prefix = [NSString stringWithstring:[aLine substringFromIndex:1]];
+					if ( [aLine characterAtIndex:[aLine length] - 1] == '/')
+						prefix = [aLine substringFromIndex:1];
+					else
+						prefix = [[aLine substringFromIndex:1] stringByAppendingString:@"/"];
 					break;
 				case '!':
 					if (([aLine rangeOfString:@"rand"]).location != NSNotFound)
@@ -32,7 +35,7 @@
 						mode |= LOOP;
 					break;
 				case '>':
-					[songs addObject:[prefix stringByAppndingString:[aLine substringFromIndex:1]];
+					[songs addObject:[prefix stringByAppendingString:[aLine substringFromIndex:1]]];
 					break;
 				default:
 					break;
