@@ -14,10 +14,27 @@
 - (void) play
 {
 	NSString * songName = nil;
+	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
 	NSData * source = nil;
 	NSSound * music = nil;
+	int ri = 0, i, done = 0;
 
-	for (songName in [playlist songs]) {
+	if ( [playlist mode] & RAND) {
+		for (i = 0 ; i < [playSongs count] ; i++) {
+			ri = rand() % [playSongs count];
+			[songs addObject:[playSongs objectAtIndex:ri]];
+			[playSongs removeObjectAtIndex:ri];
+		}
+	}
+
+	else
+		[songs setArray:playSongs];
+
+	if ( [playlist mode] & LOOP) {
+		done = 1;
+	}
+
+	for (songName in songs) {
 		source = [NSData dataWithContentsOfFile:songName];
 
 		if (!source) {

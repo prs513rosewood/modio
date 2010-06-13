@@ -47,6 +47,11 @@
 	return self;
 }
 
+- (int) mode
+{
+	return mode;
+}
+
 - (id) songs
 {
 	return [[songs retain] autorelease];

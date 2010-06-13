@@ -1,5 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import <time.h>
+#import <stdlib.h>
+#import <stdio.h>
 #import "Playlist.h"
 #import "constants.h"
 

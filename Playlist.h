@@ -9,6 +9,7 @@
 }
 
 - (id) initWithFile:(NSString *) fileName;
+- (int) mode;
 - (id) songs;
 - (void) dealloc;
 

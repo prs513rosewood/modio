@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-
+#include <time.h>
 #include <stdlib.h>
 #import "constants.h"
 #import "Player.h"
@@ -12,6 +12,7 @@ int main (int argc, char * argv[])
 	NSArray * args = [[NSProcessInfo processInfo] arguments];
 	Playlist * list = [[Playlist alloc] initWithFile:[args objectAtIndex:1]];
 	Player * player = [[Player alloc] initWithPlaylist:list];
+	srand(time(NULL));
 
 	[player play];
 	[list release];
