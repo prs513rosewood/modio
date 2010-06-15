@@ -4,11 +4,11 @@
 @interface Playlist : NSObject
 {
 	NSMutableArray * songs;
-	NSMutableArray * lines;
 	int mode;
 }
 
 - (id) initWithFile:(NSString *) fileName;
+- (id) initWithArray:(NSArray *) array;
 - (int) mode;
 - (id) songs;
 - (void) dealloc;

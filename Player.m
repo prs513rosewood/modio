@@ -4,7 +4,7 @@
 
 - (id) initWithPlaylist:(Playlist *) _playlist
 {
-	if (self = [super init]) {
+	if (( self = [super init] )) {
 		playlist = [_playlist retain];
 	}
 
@@ -15,7 +15,7 @@
 {
 	NSString * songName = nil;
 	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
-	int ri = 0, i, done = 0;
+	unsigned int ri = 0, i, done = 0;
 
 	do {
 		if ( [playlist mode] & RAND) {
