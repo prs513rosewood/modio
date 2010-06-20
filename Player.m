@@ -15,14 +15,15 @@
 {
 	NSString * songName = nil;
 	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
-	unsigned int ri = 0, i, done = 0;
+	unsigned int random_index = 0, i;
+	BOOL done = NO;
 
 	do {
 		if ( [playlist mode] & RAND) {
 			for (i = 0 ; i < [playSongs count] ; i++) {
-				ri = rand() % [playSongs count];
-				[songs addObject:[playSongs objectAtIndex:ri]];
-				[playSongs removeObjectAtIndex:ri];
+				random_index = rand() % [playSongs count];
+				[songs addObject:[playSongs objectAtIndex:random_index]];
+				[playSongs removeObjectAtIndex:random_index];
 			}
 		}
 
@@ -30,7 +31,7 @@
 			[songs setArray:playSongs];
 
 		if ( [playlist mode] & LOOP) {
-			done = 1;
+			done = YES;
 		}
 		for (songName in songs) {
 			NSData * source = [NSData dataWithContentsOfFile:songName];

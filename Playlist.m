@@ -25,6 +25,7 @@
 				range.location = i + 1;
 			}
 		}
+
 		for (aLine in lines) {
 			if ( [aLine isEqualToString:@""] != YES) {
 				switch ([aLine characterAtIndex:0]) {
