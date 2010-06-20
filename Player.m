@@ -48,7 +48,6 @@
 			}
 
 			PLAY(music);
-			NSLog(@"Done plying : %@", songName);
 			[music release];
 		}
 	} while (done);

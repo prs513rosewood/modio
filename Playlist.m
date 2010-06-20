@@ -5,9 +5,15 @@
 - (id) initWithFile:(NSString *) fileName
 {
 	if (( self = [super init] )) {
+		NSString * contents = [NSString stringWithContentsOfFile:fileName];
+
+		if (!contents) {
+			printf ("file not found: %s\n", [fileName UTF8String]);
+			exit (EXIT_FAILURE);
+		}
+
 		songs = [[NSMutableArray alloc] init];
 		NSMutableArray * lines = [NSMutableArray array];
-		NSString * contents = [NSString stringWithContentsOfFile:fileName];
 		NSString * aLine = nil, * prefix = nil;
 		NSRange range = NSMakeRange(0, 0);
 		unsigned int i;
