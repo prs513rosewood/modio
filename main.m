@@ -6,14 +6,13 @@
 #import "Player.h"
 #import "Playlist.h"
 
-#define USAGE() printf ("usage: modio [-p] file ...\n")
+#define USAGE() printf ("usage: modio file ...\n       modio -p playlist\n")
 
 int main (int argc, char * argv[])
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSArray * args = [[NSProcessInfo processInfo] arguments];
-	NSEnumerator * e = nil;
-	NSString * arg = nil;
+	BOOL playlist_mode = NO;
 
 	srand(time(NULL));
 
@@ -22,22 +21,19 @@ int main (int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 
-	if ( [[args objectAtIndex:1] isEqualToString:@"-p"] ) {
-		if (!(argc < 3)) {
-			e = [[args subarrayWithRange:NSMakeRange(2, argc - 2)] objectEnumerator];
+	playlist_mode = [[args objectAtIndex:1] isEqualToString:@"-p"];
 
-			while (( arg = [e nextObject] )) {
-				Playlist * list = [[Playlist alloc] initWithFile:arg];
-				Player * player = [[Player alloc] initWithPlaylist:list];
-				[player play];
-				[list release];
-				[player release];
-			}
-		}
-		else {
-			USAGE();
-			return EXIT_FAILURE;
-		}
+	if (playlist_mode  && !(argc < 3)) {
+		Playlist * list = [[Playlist alloc] initWithFile:[args objectAtIndex:2]];
+		Player * player = [[Player alloc] initWithPlaylist:list];
+		[player play];
+		[list release];
+		[player release];
+	}
+	
+	else if (playlist_mode && argc < 3) {
+		USAGE();
+		return EXIT_FAILURE;
 	}
 
 	else {
