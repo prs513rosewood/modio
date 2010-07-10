@@ -22,13 +22,10 @@ int main (int argc, char * argv[])
 	}
 
 	playlist_mode = [[args objectAtIndex:1] isEqualToString:@"-p"];
+	Playlist * list = nil;
 
 	if (playlist_mode  && !(argc < 3)) {
-		Playlist * list = [[Playlist alloc] initWithFile:[args objectAtIndex:2]];
-		Player * player = [[Player alloc] initWithPlaylist:list];
-		[player play];
-		[list release];
-		[player release];
+		list = [[Playlist alloc] initWithFile:[args objectAtIndex:2]];
 	}
 	
 	else if (playlist_mode && argc < 3) {
@@ -37,12 +34,13 @@ int main (int argc, char * argv[])
 	}
 
 	else {
-		Playlist * list = [[Playlist alloc] initWithArray:[args subarrayWithRange:NSMakeRange(1, argc - 1)]];
-		Player * player = [[Player alloc] initWithPlaylist:list];
-		[player play];
-		[list release];
-		[player release];
+		list = [[Playlist alloc] initWithArray:[args subarrayWithRange:NSMakeRange(1, argc - 1)]];
 	}
+
+	Player * player = [[Player alloc] initWithPlaylist:list];
+	[player play];
+	[list release];
+	[player release];
 
 	[pool drain];
 	return EXIT_SUCCESS;
