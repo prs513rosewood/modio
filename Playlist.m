@@ -31,7 +31,7 @@ Copyright (C) 2010  Lucas Frérot
 		NSString * contents = [NSString stringWithContentsOfFile:fileName];
 
 		if (!contents) {
-			printf ("file not found: %s\n", [fileName UTF8String]);
+			fprintf (stderr, "file not found: %s\n", [fileName UTF8String]);
 			exit (EXIT_FAILURE);
 		}
 

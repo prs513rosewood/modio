@@ -29,7 +29,7 @@ Copyright (C) 2010  Lucas Frérot
 #import "Player.h"
 #import "Playlist.h"
 
-#define USAGE() printf ("usage: modio file ...\n       modio -p playlist\n")
+#define USAGE() fprintf (stderr, "usage: modio file ...\n       modio -p playlist\n")
 
 int main (int argc, char * argv[])
 {

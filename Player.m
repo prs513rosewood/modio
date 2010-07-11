@@ -60,14 +60,14 @@ Copyright (C) 2010  Lucas Frérot
 			NSData * source = [NSData dataWithContentsOfFile:songName];
 
 			if (!source) {
-				printf("file not found: %s\n", [songName UTF8String]);
+				fprintf(stderr, "file not found: %s\n", [songName UTF8String]);
 				exit (EXIT_FAILURE);
 			}
 
 			NSSound * music = [[NSSound alloc] initWithData:source];
 
 			if (!music) {
-				printf ("could not read file : %s\n", [songName UTF8String]);
+				fprintf (stderr, "could not read file : %s\n", [songName UTF8String]);
 				exit(EXIT_FAILURE);
 			}
 
