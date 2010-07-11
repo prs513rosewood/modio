@@ -15,5 +15,7 @@ Player.o:Player.m Player.h constants.h
 Playlist.o:Playlist.m Playlist.h constants.h
 	$(CC) $(FLAGS) -c $< -o $@
 
+distclean:clean
+	rm -f $(EXEC)
 clean:
 	rm -f *.o
