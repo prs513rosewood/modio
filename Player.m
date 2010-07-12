@@ -36,22 +36,19 @@ Copyright (C) 2010  Lucas Frérot
 
 - (void) play
 {
-	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
+	NSMutableArray * songs = [playlist songs];
 	NSError * error = nil;
 	unsigned int random_index = 0, i;
 	BOOL done = NO;
 
 	do {
 		if ( [playlist mode] & RAND) {
-			for (i = 0 ; i < [playSongs count] ; i++) {
-				random_index = rand() % [playSongs count];
-				[songs addObject:[playSongs objectAtIndex:random_index]];
-				[playSongs removeObjectAtIndex:random_index];
+			for (i = 0 ; i < [songs count] ; i++) {
+				random_index = rand() % [[songs subarrayWithRange:NSMakeRange(i, [songs count] - i)] count] + i;
+				[songs insertObject:[songs objectAtIndex:random_index] atIndex:i];
+				[songs removeObjectAtIndex:random_index + 1];
 			}
 		}
-
-		else
-			[songs setArray:playSongs];
 
 		if ( [playlist mode] & LOOP)
 			done = YES;
