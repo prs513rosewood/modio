@@ -1,1 +1,18 @@
 Modio is a simple audio player for Mac OS X. It is a non-interactive program, so you can run it in background. It can read playlists.
+
+Here is the playlist syntax :
+
+Beacause modio needs the full path to a file, the character ':' supplies a directory. Then modio searches for files in that directory.
+The character '>' supplies a song.
+The character '!' indicates the reading mode. If the string following '!' contains "rand" or "loop", the mode is changed. Note that you can supply both "rand" and "loop".
+
+Example :
+
+!(rand | loop)
+:/Users/prs513rosewood/Music
+>Asturias.mp3
+>Prelude 1.m4a
+:/Users/Shared/Music
+>Study.mp3
+
+In the "!(rand | loop)" string, only '!', "rand" and "loop" are important.
