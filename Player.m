@@ -36,7 +36,6 @@ Copyright (C) 2010  Lucas Frérot
 
 - (void) play
 {
-	NSString * songName = nil;
 	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
 	NSError * error = nil;
 	unsigned int random_index = 0, i;
@@ -54,10 +53,10 @@ Copyright (C) 2010  Lucas Frérot
 		else
 			[songs setArray:playSongs];
 
-		if ( [playlist mode] & LOOP) {
+		if ( [playlist mode] & LOOP)
 			done = YES;
-		}
-		for (songName in songs) {
+
+		for (id songName in songs) {
 			NSData * source = [NSData dataWithContentsOfFile:songName options:0 error:&error];
 
 			if (!source && error) {
