@@ -32,7 +32,7 @@ Copyright (C) 2010  Lucas Frérot
 		NSString * contents = [NSString stringWithContentsOfFile:fileName encoding:4 error:&error];
 
 		if (!contents && error) {
-			NSString * errorDescription = [[error localizedDescription] stringByReplacingOccurrencesOfString:@"file" withString:@"playlist"];
+			NSString * errorDescription = [[error localizedDescription] stringByReplacingOccurrencesOfString:@"file" withString:@"playlist" options:0 range:NSMakeRange(4, 7)];
 			fprintf(stderr, "error: %s\n", [errorDescription UTF8String]);
 			exit ( [error code] );
 		}
