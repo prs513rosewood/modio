@@ -39,7 +39,7 @@ Copyright (C) 2010  Lucas Frérot
 
 		NSArray * lines = [contents componentsSeparatedByString:@"\n"];
 
-		NSString * prefix = nil;
+		NSString * prefix = nil, * songPath = nil;
 		songs = [[NSMutableArray alloc] init];
 
 		for (id aLine in lines) {
@@ -55,9 +55,11 @@ Copyright (C) 2010  Lucas Frérot
 							mode |= LOOP;
 						break;
 					case '>':
-						[songs addObject:[prefix stringByAppendingString:[aLine substringFromIndex:1]]];
-						break;
-					default:
+						songPath = [aLine substringFromIndex:1];
+						if ( [songPath isAbsolutePath] )
+							[songs addObject:songPath];
+						else
+							[songs addObject:[prefix stringByAppendingString:songPath]];
 						break;
 				}
 			}
