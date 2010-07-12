@@ -44,7 +44,7 @@ Copyright (C) 2010  Lucas Frérot
 	do {
 		if ( [playlist mode] & RAND) {
 			for (i = 0 ; i < [songs count] ; i++) {
-				random_index = rand() % [[songs subarrayWithRange:NSMakeRange(i, [songs count] - i)] count] + i;
+				random_index = rand() % ([songs count]  - i) + i;
 				[songs insertObject:[songs objectAtIndex:random_index] atIndex:i];
 				[songs removeObjectAtIndex:random_index + 1];
 			}
