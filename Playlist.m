@@ -37,21 +37,12 @@ Copyright (C) 2010  Lucas Frérot
 			exit ( [error code] );
 		}
 
+		NSArray * lines = [contents componentsSeparatedByString:@"\n"];
+
+		NSString * prefix = nil;
 		songs = [[NSMutableArray alloc] init];
-		NSMutableArray * lines = [NSMutableArray array];
-		NSString * aLine = nil, * prefix = nil;
-		NSRange range = NSMakeRange(0, 0);
-		unsigned int i;
 
-		for (i = 0 ; i < [contents length] ; i++) {
-			if ([contents characterAtIndex:i] == '\n') {
-				range.length = i - range.location;
-				[lines addObject:[contents substringWithRange:range]];
-				range.location = i + 1;
-			}
-		}
-
-		for (aLine in lines) {
+		for (id aLine in lines) {
 			if ( [aLine length] ) {
 				switch ([aLine characterAtIndex:0]) {
 					case ':':
