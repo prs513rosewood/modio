@@ -28,11 +28,13 @@ Copyright (C) 2010  Lucas Frérot
 - (id) initWithFile:(NSString *) fileName
 {
 	if (( self = [super init] )) {
-		NSString * contents = [NSString stringWithContentsOfFile:fileName];
+		NSError * error = nil;
+		NSString * contents = [NSString stringWithContentsOfFile:fileName encoding:4 error:&error];
 
-		if (!contents) {
-			fprintf (stderr, "file not found: %s\n", [fileName UTF8String]);
-			exit (EXIT_FAILURE);
+		if (!contents && error) {
+			NSString * errorDescription = [[error localizedDescription] stringByReplacingOccurrencesOfString:@"file" withString:@"playlist"];
+			fprintf(stderr, "error: %s\n", [errorDescription UTF8String]);
+			exit ( [error code] );
 		}
 
 		songs = [[NSMutableArray alloc] init];
@@ -50,7 +52,7 @@ Copyright (C) 2010  Lucas Frérot
 		}
 
 		for (aLine in lines) {
-			if ( [aLine isEqualToString:@""] != YES) {
+			if ( [aLine length] ) {
 				switch ([aLine characterAtIndex:0]) {
 					case ':':
 						if ( [aLine characterAtIndex:[aLine length] - 1] == '/')

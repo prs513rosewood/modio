@@ -38,6 +38,7 @@ Copyright (C) 2010  Lucas Frérot
 {
 	NSString * songName = nil;
 	NSMutableArray * songs = [NSMutableArray array], * playSongs = [playlist songs];
+	NSError * error = nil;
 	unsigned int random_index = 0, i;
 	BOOL done = NO;
 
@@ -57,17 +58,18 @@ Copyright (C) 2010  Lucas Frérot
 			done = YES;
 		}
 		for (songName in songs) {
-			NSData * source = [NSData dataWithContentsOfFile:songName];
+			NSData * source = [NSData dataWithContentsOfFile:songName options:0 error:&error];
 
-			if (!source) {
-				fprintf(stderr, "file not found: %s\n", [songName UTF8String]);
-				exit (EXIT_FAILURE);
+			if (!source && error) {
+				NSString * errorDescription = [error localizedDescription];
+				fprintf (stderr, "error: %s\n", [errorDescription UTF8String]);
+				exit( [error code] );
 			}
 
 			NSSound * music = [[NSSound alloc] initWithData:source];
 
 			if (!music) {
-				fprintf (stderr, "could not read file : %s\n", [songName UTF8String]);
+				fprintf (stderr, "error: Could not read \“%s\”.\n", [songName UTF8String]);
 				exit(EXIT_FAILURE);
 			}
 
