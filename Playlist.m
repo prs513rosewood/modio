@@ -46,10 +46,7 @@ Copyright (C) 2010  Lucas Frérot
 			if ( [aLine length] ) {
 				switch ([aLine characterAtIndex:0]) {
 					case ':':
-						if ( [aLine characterAtIndex:[aLine length] - 1] == '/')
-							prefix = [aLine substringFromIndex:1];
-						else
-							prefix = [[aLine substringFromIndex:1] stringByAppendingString:@"/"];
+						prefix = [[[aLine substringFromIndex:1] stringByStandardizingPath] stringByAppendingString:@"/"];
 						break;
 					case '!':
 						if (([aLine rangeOfString:@"rand"]).location != NSNotFound)
