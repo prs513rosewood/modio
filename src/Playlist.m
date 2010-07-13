@@ -45,7 +45,7 @@ Copyright (C) 2010  Lucas Frérot
 		songs = [[NSMutableArray alloc] init];
 
 		for (id aLine in lines) {
-			if ( [aLine length] ) {
+			if ( [aLine length]  && ([aLine length] - 1)) {
 				switch ([aLine characterAtIndex:0]) {
 					case ':':
 						prefix = [[[aLine substringFromIndex:1] stringByStandardizingPath] stringByAppendingString:@"/"];
@@ -65,11 +65,25 @@ Copyright (C) 2010  Lucas Frérot
 							mode |= LOOP;
 						break;
 					case '>':
-						songPath = [aLine substringFromIndex:1];
-						if ( [songPath isAbsolutePath] )
-							[songs addObject:songPath];
-						else
-							[songs addObject:[prefix stringByAppendingString:songPath]];
+						if ( [aLine characterAtIndex:1] == '>') {
+							NSDirectoryEnumerator * e = [helper enumeratorAtPath:prefix];
+							NSString * file = nil;
+
+							while (( file = [e nextObject] )) {
+								[helper fileExistsAtPath:[prefix stringByAppendingString:file] isDirectory:&isDir];
+
+								if (!isDir)
+									[songs addObject:[prefix stringByAppendingString:file]];
+							}
+						}
+
+						else {
+							songPath = [aLine substringFromIndex:1];
+							if ( [songPath isAbsolutePath] )
+								[songs addObject:songPath];
+							else
+								[songs addObject:[prefix stringByAppendingString:songPath]];
+						}
 						break;
 				}
 			}
