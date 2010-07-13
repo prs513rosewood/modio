@@ -3,7 +3,7 @@ Modio is a simple audio player for Mac OS X. It is a non-interactive program, so
 Here is the playlist syntax :
 
 Beacause modio needs the full path to a file, the character ':' supplies a directory. Then modio searches for files in that directory.
-The character '>' supplies a song.
+The character '>' supplies a song. ">>" supplies the whole content of a directory indicated by ':'.
 The character '!' indicates the reading mode. If the string following '!' contains "rand" or "loop", the mode is changed. Note that you can supply both "rand" and "loop".
 
 Example :
@@ -14,5 +14,7 @@ Example :
 >Prelude 1.m4a
 :/Users/Shared/Music
 >Study.mp3
+:/Users/Shared/MyFavArtist
+>>
 
 In the "!(rand | loop)" string, only '!', "rand" and "loop" are important.
