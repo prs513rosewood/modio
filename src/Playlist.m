@@ -38,8 +38,10 @@ Copyright (C) 2010  Lucas Frérot
 		}
 
 		NSArray * lines = [contents componentsSeparatedByString:@"\n"];
-
+		NSFileManager * helper = [[[NSFileManager alloc] init] autorelease];
 		NSString * prefix = nil, * songPath = nil;
+		BOOL exists, isDir;
+
 		songs = [[NSMutableArray alloc] init];
 
 		for (id aLine in lines) {
@@ -47,6 +49,14 @@ Copyright (C) 2010  Lucas Frérot
 				switch ([aLine characterAtIndex:0]) {
 					case ':':
 						prefix = [[[aLine substringFromIndex:1] stringByStandardizingPath] stringByAppendingString:@"/"];
+						exists = [helper fileExistsAtPath:prefix isDirectory:&isDir];
+
+						if (!exists || !isDir) {
+							NSString * errorString = [NSString stringWithFormat:@"The directory \“%@\” doesn't exist.", prefix];
+							fprintf(stderr, "error: %s\n", [errorString UTF8String]);
+							exit(EXIT_FAILURE);
+						}
+
 						break;
 					case '!':
 						if (([aLine rangeOfString:@"rand"]).location != NSNotFound)
