@@ -65,7 +65,7 @@ Copyright (C) 2010  Lucas Frérot
 							mode |= LOOP;
 						break;
 					case '>':
-						if ( [aLine characterAtIndex:1] == '>') {
+						if ( [aLine characterAtIndex:1] == '>' && prefix != nil) {
 							NSDirectoryEnumerator * e = [helper enumeratorAtPath:prefix];
 							NSString * file = nil;
 
