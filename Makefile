@@ -1,26 +1,52 @@
-FRAMEWORKS=-framework Foundation -framework AppKit
-CC=gcc
-EXEC=modio
-PREFIX=/usr/local
-SRC=src
+FRAMEWORKS	=	-framework Foundation -framework AppKit
+CC		=	gcc
 
-all:$(EXEC)
+PPC_PREFIX	=	objects/ppc
+I386_PREFIX	=	objects/i386
+EXEC_PPC	=	$(PPC_PREFIX)/modio
+EXEC_I386	=	$(I386_PREFIX)/modio
+EXEC		=	modio
+PPC		=	-arch ppc
+I386		=	-arch i386
+PREFIX		=	/usr/local
+SRC		=	src
 
-$(EXEC):objects
-	$(CC) $(FRAMEWORKS) $(SRC)/*.o -o $(EXEC)
+.PHONY:objects-ppc, objects-i386, install, clean
 
-.PHONY:objects
-objects:
-	make -C $(SRC)
+all:universal
 
-.PHONY:install
+universal:ppc i386
+	lipo -create $(EXEC_PPC) $(EXEC_I386) -output $(EXEC)
+
+
+#
+# ppc architecture
+#
+
+ppc:$(EXEC_PPC)
+
+$(EXEC_PPC):objects-ppc
+	$(CC) $(PPC) $(FRAMEWORKS) $(PPC_PREFIX)/*.o -o $(EXEC_PPC)
+objects-ppc:
+	make -C $(SRC) ppc
+
+#
+# i386 architecture
+#
+
+i386:$(EXEC_I386)
+
+$(EXEC_I386):objects-i386
+	$(CC) $(I386) $(FRAMEWORKS) $(I386_PREFIX)/*.o -o $(EXEC_I386)
+objects-i386:
+	make -C $(SRC) i386
+
+# Other targets
+
 install:
 	mkdir -p $(PREFIX)/bin
 	install $(EXEC) $(PREFIX)/bin
-
 distclean:clean
-	rm -f $(EXEC)
-
-.PHONY:clean
+	rm -rf $(EXEC) objects/ 
 clean:
 	make -C $(SRC) clean
