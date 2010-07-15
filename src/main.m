@@ -21,10 +21,11 @@ Copyright (C) 2010  Lucas Frérot
  * Reads arguments and initializes playlist and player instances
  */
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-#include <time.h>
-#include <stdlib.h>
+#import <Cocoa/Cocoa.h>
+
+#import  <time.h>
+#import  <stdlib.h>
+
 #import "constants.h"
 #import "Player.h"
 #import "Playlist.h"

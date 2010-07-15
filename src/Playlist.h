@@ -25,6 +25,7 @@ Copyright (C) 2010  Lucas Frérot
  */
 
 #import <Foundation/Foundation.h>
+
 #import "constants.h"
 
 @interface Playlist : NSObject

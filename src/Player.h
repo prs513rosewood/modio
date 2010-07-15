@@ -22,11 +22,12 @@ Copyright (C) 2010  Lucas Frérot
  * and genrates an array of songs according to mode (randomly if specified).
  */
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
+
 #import <time.h>
 #import <stdlib.h>
 #import <stdio.h>
+
 #import "Playlist.h"
 #import "constants.h"
 

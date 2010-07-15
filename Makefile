@@ -1,4 +1,4 @@
-FRAMEWORKS	=	-framework Foundation -framework AppKit
+FRAMEWORKS	=	-framework Cocoa
 CC		=	gcc
 
 PPC_PREFIX	=	objects/ppc
