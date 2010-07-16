@@ -28,7 +28,7 @@ Copyright (C) 2010  Lucas Frérot
 - (id) initWithPlaylist:(Playlist *) _playlist
 {
 	if (( self = [super init] )) {
-		playlist = [_playlist retain];
+		playlist = (_playlist == nil) ? nil : [_playlist retain];
 	}
 
 	return self;
@@ -36,6 +36,9 @@ Copyright (C) 2010  Lucas Frérot
 
 - (void) play
 {
+	if (playlist == nil)
+		return;
+
 	NSMutableArray * songs = [playlist songs];
 	NSError * error = nil;
 	unsigned int random_index = 0, i;

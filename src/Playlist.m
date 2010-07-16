@@ -31,6 +31,9 @@ Copyright (C) 2010  Lucas Frérot
 		NSArray * lines = [self contentsOfPlaylist:fileName];
 		songs = [[NSMutableArray alloc] init];
 
+		if (lines == nil)
+			return nil;
+
 		NSString * prefix = nil, * songPath = nil;
 
 		for (id aLine in lines) {
@@ -85,7 +88,7 @@ Copyright (C) 2010  Lucas Frérot
 	if (!contents && error) {
 		NSString * errorDescription = [[error localizedDescription] stringByReplacingOccurrencesOfString:@"file" withString:@"playlist" options:0 range:NSMakeRange(4, 7)];
 		fprintf(stderr, "error: %s\n", [errorDescription UTF8String]);
-		exit ( [error code] );
+		return nil;
 	}
 
 	return [contents componentsSeparatedByString:@"\n"];
