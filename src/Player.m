@@ -41,6 +41,7 @@ Copyright (C) 2010  Lucas Frérot
 
 	NSMutableArray * songs = [playlist songs];
 	NSError * error = nil;
+	id songName = nil;
 	unsigned int random_index = 0, i;
 	BOOL done = NO;
 
@@ -56,25 +57,32 @@ Copyright (C) 2010  Lucas Frérot
 		if ( [playlist mode] & LOOP)
 			done = YES;
 
-		for (id songName in songs) {
+		for (i = 0 ; i < [songs count] ; i++) {
+			songName = [songs objectAtIndex:i];
 			NSData * source = [NSData dataWithContentsOfFile:songName options:0 error:&error];
 
 			if (!source && error) {
 				NSString * errorDescription = [error localizedDescription];
 				fprintf (stderr, "error: %s\n", [errorDescription UTF8String]);
-				exit( [error code] );
+				[songs removeObject:songName];
 			}
 
-			NSSound * music = [[NSSound alloc] initWithData:source];
+			else {
 
-			if (!music) {
-				fprintf (stderr, "error: Could not read \“%s\”.\n", [songName UTF8String]);
-				exit(EXIT_FAILURE);
+				NSSound * music = [[NSSound alloc] initWithData:source];
+
+				if (!music) {
+					fprintf (stderr, "error: Could not read \“%s\”.\n", [songName UTF8String]);
+					[songs removeObject:songName];
+				}
+
+				PLAY(music);
+				[music release];
 			}
-
-			PLAY(music);
-			[music release];
 		}
+
+		if ([songs count] == 0)
+			done = NO;
 	} while (done);
 }
 
