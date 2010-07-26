@@ -25,18 +25,21 @@ Copyright (C) 2010  Lucas Frérot
 
 #import  <time.h>
 #import  <stdlib.h>
+#import <unistd.h>
 
 #import "constants.h"
 #import "Player.h"
 #import "Playlist.h"
 
-#define USAGE() fprintf (stderr, "usage: modio file ...\n       modio -p playlist\n")
+#define USAGE() fprintf (stderr, "usage: modio [-rl] file ...\n       modio -p playlist\n")
 
 int main (int argc, char * argv[])
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSArray * args = [[NSProcessInfo processInfo] arguments];
 	BOOL playlist_mode = NO;
+	int mode = 0;
+	char ch;
 
 	srand(time(NULL));
 
@@ -58,7 +61,22 @@ int main (int argc, char * argv[])
 	}
 
 	else {
-		list = [[Playlist alloc] initWithArray:[args subarrayWithRange:NSMakeRange(1, argc - 1)]];
+		while (( ch = getopt(argc, argv, "rl")) != -1) {
+			switch (ch) {
+				case 'r':
+					mode |= RAND;
+					break;
+				case 'l':
+					mode |= LOOP;
+					break;
+				case '?':
+				default:
+					USAGE();
+					break;
+			}
+		}
+		list = [[Playlist alloc] initWithArray:[args subarrayWithRange:NSMakeRange(optind, argc - optind)]];
+		[list setValue:[NSNumber numberWithInt:mode] forKey:@"mode"];
 	}
 
 	Player * player = [[Player alloc] initWithPlaylist:list];
