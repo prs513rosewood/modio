@@ -75,7 +75,7 @@ Copyright (C) 2010  Lucas Frérot
 - (id) initWithArray:(NSArray *) array
 {
 	if (( self = [super init] )) {
-		songs = [array retain];
+		songs = [array mutableCopy];
 	}
 	return self;
 }
