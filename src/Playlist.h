@@ -39,9 +39,10 @@ Copyright (C) 2010  Lucas Frérot
 - (NSArray *) contentsOfPlaylist:(NSString *) fileName;
 - (NSString *) makePrefix:(NSString*) str;
 - (NSMutableArray *) enumerateDirectory:(NSString *) dir;
-- (int) mode;
-- (id) songs;
 - (void) dealloc;
+
+@property (readwrite) int mode;
+@property (readonly, retain) NSMutableArray * songs;
 
 @end
 

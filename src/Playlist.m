@@ -25,6 +25,9 @@ Copyright (C) 2010  Lucas Frérot
 
 @implementation Playlist
 
+@synthesize mode;
+@synthesize songs;
+
 - (id) initWithFile:(NSString *) fileName
 {
 	if (( self = [super init] )) {
@@ -125,16 +128,6 @@ Copyright (C) 2010  Lucas Frérot
 			[array addObject:[dir stringByAppendingString:file]];
 	}
 	return array;
-}
-
-- (int) mode
-{
-	return mode;
-}
-
-- (id) songs
-{
-	return [[songs retain] autorelease];
 }
 
 - (void) dealloc
