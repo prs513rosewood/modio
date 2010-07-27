@@ -76,7 +76,7 @@ int main (int argc, char * argv[])
 			}
 		}
 		list = [[Playlist alloc] initWithArray:[args subarrayWithRange:NSMakeRange(optind, argc - optind)]];
-		[list setValue:[NSNumber numberWithInt:mode] forKey:@"mode"];
+		[list setMode:mode];
 	}
 
 	Player * player = [[Player alloc] initWithPlaylist:list];
