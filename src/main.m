@@ -23,8 +23,8 @@ Copyright (C) 2010  Lucas Frérot
 
 #import <Cocoa/Cocoa.h>
 
-#import  <time.h>
-#import  <stdlib.h>
+#import <time.h>
+#import <stdlib.h>
 #import <unistd.h>
 
 #import "constants.h"
