@@ -1,15 +1,15 @@
 FRAMEWORKS	=	-framework Cocoa
-CC		=	gcc
+CC			=	gcc
 
 PPC_PREFIX	=	objects/ppc
 I386_PREFIX	=	objects/i386
 EXEC_PPC	=	$(PPC_PREFIX)/modio
 EXEC_I386	=	$(I386_PREFIX)/modio
 EXEC		=	modio
-PPC		=	-arch ppc
+PPC			=	-arch ppc
 I386		=	-arch i386
 PREFIX		=	/usr/local
-SRC		=	src
+SRC			=	src
 
 .PHONY:objects-ppc, objects-i386, install, clean
 
