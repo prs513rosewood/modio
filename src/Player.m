@@ -34,6 +34,32 @@ Copyright (C) 2010  Lucas Frérot
 	return self;
 }
 
+- (void) mixArray:(NSMutableArray *) array
+{
+	unsigned int randIndex = 0, i;
+	const unsigned int count = [array count];
+
+	for (i = 0 ; i < count ; i++) {
+		randIndex = rand() % (count - i) + i;
+		[array insertObject:[array objectAtIndex:randIndex] atIndex:i];
+		[array removeObjectAtIndex:randIndex + 1];
+	}
+}
+
+- (NSData *) getData:(NSString *) file
+{
+	NSError * error = nil;
+	NSData * data = [NSData dataWithContentsOfFile:file options:0 error:&error];
+
+	if (!data && error) {
+		NSString * errorDescription = [error localizedDescription];
+		fprintf (stderr, "error: %s\n", [errorDescription UTF8String]);
+	}
+
+	return data;
+
+}
+
 - (void) play
 {
 	if (playlist == nil)
@@ -42,30 +68,22 @@ Copyright (C) 2010  Lucas Frérot
 	NSMutableArray * songs = [playlist songs];
 	NSError * error = nil;
 	id songName = nil;
-	unsigned int random_index = 0, i;
+	unsigned int i;
 	BOOL done = NO;
 
 	do {
-		if ( [playlist mode] & RAND) {
-			for (i = 0 ; i < [songs count] ; i++) {
-				random_index = rand() % ([songs count]  - i) + i;
-				[songs insertObject:[songs objectAtIndex:random_index] atIndex:i];
-				[songs removeObjectAtIndex:random_index + 1];
-			}
-		}
+		if ( [playlist mode] & RAND)
+			[self mixArray:songs];
 
 		if ( [playlist mode] & LOOP)
 			done = YES;
 
 		for (i = 0 ; i < [songs count] ; i++) {
 			songName = [songs objectAtIndex:i];
-			NSData * source = [NSData dataWithContentsOfFile:songName options:0 error:&error];
+			NSData * source = [self getData:songName];
 
-			if (!source && error) {
-				NSString * errorDescription = [error localizedDescription];
-				fprintf (stderr, "error: %s\n", [errorDescription UTF8String]);
+			if (!source)
 				[songs removeObject:songName];
-			}
 
 			else {
 
