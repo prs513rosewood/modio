@@ -106,7 +106,7 @@ Copyright (C) 2010  Lucas Frérot
 	exists = [helper fileExistsAtPath:newPrefix isDirectory:&isDir];
 
 	if (!exists || !isDir) {
-		NSString * errorString = [NSString stringWithFormat:@"The directory \“%@\” doesn't exist.", newPrefix];
+		NSString * errorString = [NSString stringWithFormat:@"The directory \"%@\" doesn't exist.", newPrefix];
 		fprintf(stderr, "error: %s\n", [errorString UTF8String]);
 		return nil;
 	}
