@@ -29,6 +29,7 @@ Copyright (C) 2010  Lucas Frérot
 #import <stdio.h>
 
 #import "Playlist.h"
+#import "PlaybackManager.h"
 #import "constants.h"
 
 @interface Player : NSObject
