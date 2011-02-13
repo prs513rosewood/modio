@@ -38,8 +38,10 @@ void HandleOutputBuffer (
 				inAQ,
 				NO
 				);
-		if (end == kNumberBuffers)
+		if (end == kNumberBuffers) {
 			pAqData->mIsRunning = NO; 
+			end = 0;
+		}
 	}
 }
 
