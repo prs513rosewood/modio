@@ -34,7 +34,7 @@ Copyright (C) 2010  Lucas Frérot
 	return self;
 }
 
-- (void) mixArray:(NSMutableArray *) array
+- (void) shuffleArray:(NSMutableArray *) array
 {
 	unsigned int randIndex = 0, i;
 	const unsigned int count = [array count];
@@ -66,14 +66,13 @@ Copyright (C) 2010  Lucas Frérot
 		return;
 
 	NSMutableArray * songs = [playlist songs];
-	NSError * error = nil;
-	id songName = nil;
+	NSString * songName = nil;
 	unsigned int i;
 	BOOL done = NO;
 
 	do {
 		if ( [playlist mode] & RAND)
-			[self mixArray:songs];
+			[self shuffleArray:songs];
 
 		if ( [playlist mode] & LOOP)
 			done = YES;
@@ -90,7 +89,7 @@ Copyright (C) 2010  Lucas Frérot
 				NSSound * music = [[NSSound alloc] initWithData:source];
 
 				if (!music) {
-					fprintf (stderr, "error: Could not read \“%s\”.\n", [songName UTF8String]);
+					fprintf (stderr, "error: Could not read \"%s\".\n", [songName UTF8String]);
 					[songs removeObject:songName];
 				}
 

@@ -37,7 +37,7 @@ Copyright (C) 2010  Lucas Frérot
 }
 
 - (id) initWithPlaylist:(Playlist *) _playlist;
-- (void) mixArray:(NSMutableArray *) array;
+- (void) shuffleArray:(NSMutableArray *) array;
 - (NSData *) getData:(NSString *) file;
 - (void) play;
 - (void) dealloc;
