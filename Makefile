@@ -1,4 +1,4 @@
-FRAMEWORKS	=	-framework Cocoa
+FRAMEWORKS	=	-framework Foundation -framework CoreFoundation -framework CoreAudio -framework AudioToolbox
 CC			=	gcc
 
 PPC_PREFIX	=	objects/ppc

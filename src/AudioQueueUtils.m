@@ -7,7 +7,7 @@ void HandleOutputBuffer (
 )
 {
 	struct AQPlayerState *pAqData = (struct AQPlayerState *) aqData;        // 1
-	static end = 0;
+	static int end = 0;
 	if (pAqData->mIsRunning == NO) {
 		return;
 	}
@@ -26,7 +26,7 @@ void HandleOutputBuffer (
 	if (numPackets > 0) {                                     // 5
 		inBuffer->mAudioDataByteSize = numBytesReadFromFile;  // 6
 		AudioQueueEnqueueBuffer ( 
-				pAqData->mQueue,
+				inAQ,
 				inBuffer,
 				(pAqData->mPacketDescs ? numPackets : 0),
 				pAqData->mPacketDescs
@@ -35,7 +35,7 @@ void HandleOutputBuffer (
 	} else {
 		end++;
 		AudioQueueStop (
-				pAqData->mQueue,
+				inAQ,
 				NO
 				);
 		if (end == kNumberBuffers)
@@ -51,8 +51,8 @@ void DeriveBufferSize (
 		UInt32						*outNumPacketsToRead
 )
 {
-	static const int maxBufferSize = 0x50000;
-	static const int minBufferSize = 0x4000;
+	static const unsigned int maxBufferSize = 0x50000;
+	static const unsigned int minBufferSize = 0x4000;
 
 	if (ASBDesc.mFramesPerPacket != 0) {
 		Float64 numPacketsForTime = ASBDesc.mSampleRate / ASBDesc.mFramesPerPacket * seconds;
