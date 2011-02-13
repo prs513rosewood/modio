@@ -26,6 +26,8 @@ Copyright (C) 2010  Lucas Frérot
 		sleep ( (int) [x duration] );\
 		[x stop];
 
+#define kNumberBuffers 3
+
 enum {
 	RAND = 1 << 0,
 	LOOP = 1 << 1

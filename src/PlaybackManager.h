@@ -3,26 +3,8 @@
 #import <CoreAudio/CoreAudio.h>
 #import <CoreFoundation/CoreFoundation.h>
 
-#define kNumberBuffers 3
-
-struct AQPlayerState
-{
-	AudioStreamBasicDescription		mDataFormat;
-	AudioQueueRef					mQueue;
-	AudioQueueBufferRef				mBuffers[kNumberBuffers];
-	AudioFileID						mAudioFile;
-	UInt32							bufferByteSize;
-	SInt64							mCurrentPacket;
-	UInt32							mNumPacketsToRead;
-	AudioStreamPacketDescription	*mPacketDescs;
-	BOOL							mIsRunning;
-};
-
-void HandleOutputBuffer (
-		void				*aqData,
-		AudioQueueRef		inAQ,
-		AudioQueueBufferRef	inBuffer
-);
+#import "constants.h"
+#import "AudioQueueUtils.h"
 
 @interface PlaybackManager : NSObject
 {
