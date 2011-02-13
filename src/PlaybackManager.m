@@ -8,23 +8,23 @@
 	if (( self = [super init] )) {
 		int i;
 		NSURL * fileURL = [NSURL fileURLWithPath:filePath];
-		OSStatus exists = AudioFileOpenURL((CFURLRef) fileURL, fsRdPerm, 0, &aqData.mAudioFile);
+		OSStatus doesntExists = AudioFileOpenURL((CFURLRef) fileURL, fsRdPerm, 0, &aqData.mAudioFile);
 		UInt32 dataFormatSize = sizeof (aqData.mDataFormat);
 
-		if (!exists) {
-			fprintf(stderr, "error: The file \"%s\" doesn't exist.", [filePath UTF8String]);
+		if (doesntExists) {
+			fprintf(stderr, "error: The file \"%s\" doesn't exist.\n", [filePath UTF8String]);
 			return nil;
 		}
 
-		OSStatus isReadable = AudioFileGetProperty(
+		OSStatus isNotReadable = AudioFileGetProperty(
 				aqData.mAudioFile,
 				kAudioFilePropertyDataFormat,
 				&dataFormatSize,
 				&aqData.mDataFormat
 		);
 
-		if (!isReadable) {
-			fprintf(stderr, "error: The file \"%s\" doesn't exist.", [filePath UTF8String]);
+		if (isNotReadable) {
+			fprintf(stderr, "error: The file \"%s\" isn't readable.\n", [filePath UTF8String]);
 			return nil;
 		}
 
