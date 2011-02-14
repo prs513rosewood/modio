@@ -79,25 +79,16 @@ Copyright (C) 2010  Lucas Frérot
 
 		for (i = 0 ; i < [songs count] ; i++) {
 			songName = [songs objectAtIndex:i];
-			NSData * source = [self getData:songName];
+			PlaybackManager * manager = [[PlaybackManager alloc] initWithFile:songName];
 
-			if (!source) {
+			if (!manager) {
 				[songs removeObject:songName];
 				i--;
 			}
 
 			else {
-
-				NSSound * music = [[NSSound alloc] initWithData:source];
-
-				if (!music) {
-					fprintf (stderr, "error: Could not read \"%s\".\n", [songName UTF8String]);
-					[songs removeObject:songName];
-					i--;
-				}
-
-				PLAY(music);
-				[music release];
+				[manager play];
+				[manager release];
 			}
 		}
 
