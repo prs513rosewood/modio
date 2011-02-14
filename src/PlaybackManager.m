@@ -8,25 +8,30 @@
 	if (( self = [super init] )) {
 		int i;
 		NSURL * fileURL = [NSURL fileURLWithPath:filePath];
-		OSStatus doesntExists = AudioFileOpenURL((CFURLRef) fileURL, fsRdPerm, 0, &aqData.mAudioFile);
+		OSStatus result = AudioFileOpenURL((CFURLRef) fileURL, fsRdPerm, 0, &aqData.mAudioFile);
 		UInt32 dataFormatSize = sizeof (aqData.mDataFormat);
 
-		if (doesntExists) {
-			fprintf(stderr, "error: The file \"%s\" doesn't exist.\n", [filePath UTF8String]);
+		if (result == fnfErr) {
+			fprintf(stderr, "error: File not found : \"%s\"\n", [filePath UTF8String]);
 			return nil;
 		}
 
-		OSStatus isNotReadable = AudioFileGetProperty(
+		else if (result == kAudioFileUnspecifiedError) {
+			fprintf(stderr, "error: Bad format for file : \"%s\"\n", [filePath UTF8String]);
+			return nil;
+		}
+
+		else {
+			fprintf(stderr, "error: Unknown error for file : \"%s\"\n", [filePath UTF8String]);
+			return nil;
+		}
+
+		AudioFileGetProperty(
 				aqData.mAudioFile,
 				kAudioFilePropertyDataFormat,
 				&dataFormatSize,
 				&aqData.mDataFormat
 		);
-
-		if (isNotReadable) {
-			fprintf(stderr, "error: The file \"%s\" isn't readable.\n", [filePath UTF8String]);
-			return nil;
-		}
 
 		AudioQueueNewOutput(
 				&aqData.mDataFormat,
