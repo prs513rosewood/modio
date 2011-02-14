@@ -81,8 +81,10 @@ Copyright (C) 2010  Lucas Frérot
 			songName = [songs objectAtIndex:i];
 			NSData * source = [self getData:songName];
 
-			if (!source)
+			if (!source) {
 				[songs removeObject:songName];
+				i--;
+			}
 
 			else {
 
@@ -91,6 +93,7 @@ Copyright (C) 2010  Lucas Frérot
 				if (!music) {
 					fprintf (stderr, "error: Could not read \"%s\".\n", [songName UTF8String]);
 					[songs removeObject:songName];
+					i--;
 				}
 
 				PLAY(music);
