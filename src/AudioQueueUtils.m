@@ -1,3 +1,26 @@
+/*
+Copyright (C) 2010  Lucas Frérot
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* 
+ * AudioQueueUtils.m
+ *
+ * Implements callback and other useful functions for handleing queues.
+ */
+
 #import "AudioQueueUtils.h"
 
 void HandleOutputBuffer (
@@ -6,13 +29,13 @@ void HandleOutputBuffer (
 		AudioQueueBufferRef inBuffer
 )
 {
-	struct AQPlayerState *pAqData = (struct AQPlayerState *) aqData;        // 1
+	struct AQPlayerState *pAqData = (struct AQPlayerState *) aqData;
 	static int end = 0;
 	if (pAqData->mIsRunning == NO) {
 		return;
 	}
-	UInt32 numBytesReadFromFile;                              // 3
-	UInt32 numPackets = pAqData->mNumPacketsToRead;           // 4
+	UInt32 numBytesReadFromFile;
+	UInt32 numPackets = pAqData->mNumPacketsToRead;
 	AudioFileReadPackets (
 			pAqData->mAudioFile,
 			NO,
@@ -23,15 +46,15 @@ void HandleOutputBuffer (
 			inBuffer->mAudioData 
 			);
 
-	if (numPackets > 0) {                                     // 5
-		inBuffer->mAudioDataByteSize = numBytesReadFromFile;  // 6
+	if (numPackets > 0) {
+		inBuffer->mAudioDataByteSize = numBytesReadFromFile;
 		AudioQueueEnqueueBuffer ( 
 				inAQ,
 				inBuffer,
 				(pAqData->mPacketDescs ? numPackets : 0),
 				pAqData->mPacketDescs
 				);
-		pAqData->mCurrentPacket += numPackets;                // 7 
+		pAqData->mCurrentPacket += numPackets;
 	} else {
 		end++;
 		AudioQueueStop (
