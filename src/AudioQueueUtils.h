@@ -15,7 +15,7 @@ Copyright (C) 2010  Lucas Frérot
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* 
+/*
  * AudioQueueUtils.h
  *
  * Defines useful functions for handleing audio queues (set up and run).

@@ -15,7 +15,7 @@ Copyright (C) 2010  Lucas Frérot
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* 
+/*
  * PlaybackManager.h
  *
  * Defines a class that will handle playback of an audio file.

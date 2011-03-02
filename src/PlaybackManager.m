@@ -15,7 +15,7 @@ Copyright (C) 2010  Lucas Frérot
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* 
+/*
  * PlaybackManager.m
  *
  * Implements a class that will handle playback of an audio file.
@@ -44,7 +44,7 @@ Copyright (C) 2010  Lucas Frérot
 			return nil;
 		}
 
-		else {
+		else if (result != noErr) {
 			fprintf(stderr, "error: Unknown error for file : \"%s\"\n", [filePath UTF8String]);
 			return nil;
 		}
