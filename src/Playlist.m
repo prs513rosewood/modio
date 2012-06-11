@@ -60,7 +60,7 @@ Copyright (C) 2010  Lucas Frérot
 						}
 
 						else {
-							songPath = [[aLine substringFromIndex:1] stringByStandardizingPath];
+							songPath = [[[aLine substringFromIndex:1] stringByStandardizingPath] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 							if ( [songPath isAbsolutePath] || !prefix)
 								[songs addObject:songPath];
 							else
